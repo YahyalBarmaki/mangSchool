@@ -27,6 +27,10 @@ public class Classe {
     @Size(min = 2,max=20,message = "Le nom de la classe doit compris entre 2 à 20 caratéteres")
     @Column(name = "nom")
     private String nom;
+    @NotEmpty(message = "Ce champ ne doit pas etre vide")
+    @Size(min = 2,max=20,message = "Le niveau de la classe doit compris entre 2 à 20 caratéteres")
+    @Column(name = "niveau")
+    private String niveau;
     @ManyToOne
     @JoinColumn(name = "gestion_ecole_id")
     private GestionEcole gestionEcole;

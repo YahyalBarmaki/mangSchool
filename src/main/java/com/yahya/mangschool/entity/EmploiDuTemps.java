@@ -36,10 +36,13 @@ public class EmploiDuTemps {
             joinColumns = @JoinColumn(name = "emploi_du_temps_id"),
             inverseJoinColumns = @JoinColumn(name = "enseignant_id"))
     @ToString.Exclude
-    private List<Enseignant> enseignants;
+    private List<Enseignant> enseignant;
 
     @Column(name = "jour")
     private String jour;
+
+    @OneToMany(mappedBy = "emploiDuTemps", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CreneauEmploiDuTemps> creneaux;
 
     @Override
     public boolean equals(Object o) {

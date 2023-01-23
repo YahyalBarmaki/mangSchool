@@ -3,9 +3,11 @@ package com.yahya.mangschool.services;
 import com.yahya.mangschool.entity.Classe;
 import com.yahya.mangschool.entity.Eleve;
 import com.yahya.mangschool.repositories.EleveRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EleveService {
 
     private final EleveRepository eleveRepository;

@@ -35,7 +35,7 @@ public class EcoleService {
         ecoleRepository.deleteById(id);
     }
 
-    public Ecole getEcoleByName(String name) {
-        return ecoleRepository.findByName(name);
+    public Ecole getEcoleByNom(String nom) {
+        return ecoleRepository.findByNom(nom);
     }
 }

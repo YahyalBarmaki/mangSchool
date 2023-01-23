@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Getter
@@ -13,31 +12,21 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @Table
-public class Note {
-
+public class CreneauEmploiDuTemps {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
     @ManyToOne
-    @JoinColumn(name = "eleve_id")
-    private Eleve eleve;
-
-    @ManyToOne
-    @JoinColumn(name = "matiere_id")
-    private Matiere matiere;
-
-    @NotEmpty(message = "Ce champ ne doit pas etre vide")
-    @Column(name = "note")
-    private double note;
+    @JoinColumn(name = "emploi_du_temps_id")
+    private EmploiDuTemps emploiDuTemps;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Note note = (Note) o;
-        return id != null && Objects.equals(id, note.id);
+        CreneauEmploiDuTemps that = (CreneauEmploiDuTemps) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.yahya.mangschool.services;
 
 import com.yahya.mangschool.entity.EmploiDuTemps;
+import com.yahya.mangschool.entity.Enseignant;
 import com.yahya.mangschool.repositories.EmploiDuTempsRepository;
 import org.springframework.stereotype.Service;
 

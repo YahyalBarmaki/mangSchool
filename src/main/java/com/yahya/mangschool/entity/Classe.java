@@ -29,7 +29,7 @@ public class Classe {
     @Column(name = "prenom")
     private String prenom;
 
-    @ManyToMany(mappedBy = "classes")
+    @ManyToMany()
     @ToString.Exclude
     private List<Matiere> matieres;
 

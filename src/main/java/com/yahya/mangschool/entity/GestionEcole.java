@@ -32,7 +32,7 @@ public class GestionEcole {
     @ToString.Exclude
     private List<Enseignant> enseignants = new ArrayList<>();
 
-    @OneToMany(mappedBy = "gestionEcole", cascade = CascadeType.ALL)
+    @OneToMany()
     @ToString.Exclude
     private List<Eleve> eleves = new ArrayList<>();
 

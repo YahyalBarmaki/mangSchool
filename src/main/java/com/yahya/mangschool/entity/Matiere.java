@@ -1,12 +1,11 @@
 package com.yahya.mangschool.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -34,4 +33,17 @@ public class Matiere {
     @ManyToOne
     @JoinColumn(name = "note_id")
     private Note note;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Matiere matiere = (Matiere) o;
+        return id != null && Objects.equals(id, matiere.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

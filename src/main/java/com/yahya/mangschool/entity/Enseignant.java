@@ -30,7 +30,7 @@ public class Enseignant {
     private GestionEcole gestionEcole;
 
 
-    @ManyToMany(mappedBy = "enseignants")
+    @ManyToMany()
     @ToString.Exclude
     private List<Matiere> matieres;
 

@@ -4,41 +4,38 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import java.util.List;
 import java.util.Objects;
-
 
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "classe")
-public class Classe {
+@Table
+public class Note {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "nom")
-    private String nom;
     @ManyToOne
-    @JoinColumn(name = "gestion_ecole_id")
-    private GestionEcole gestionEcole;
+    @JoinColumn(name = "eleve_id")
+    private Eleve eleve;
 
-    @Column(name = "prenom")
-    private String prenom;
+    @ManyToOne
+    @JoinColumn(name = "matiere_id")
+    private Matiere matiere;
 
-    @ManyToMany(mappedBy = "classes")
-    @ToString.Exclude
-    private List<Matiere> matieres;
+    @Column(name = "note")
+    private float note;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Classe classe = (Classe) o;
-        return id != null && Objects.equals(id, classe.id);
+        Note note = (Note) o;
+        return id != null && Objects.equals(id, note.id);
     }
 
     @Override

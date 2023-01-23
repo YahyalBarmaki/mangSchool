@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import java.util.List;
 import java.util.Objects;
 
 
@@ -13,8 +12,9 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "classe")
-public class Classe {
+@Table
+public class Ecole {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -22,23 +22,22 @@ public class Classe {
 
     @Column(name = "nom")
     private String nom;
-    @ManyToOne
-    @JoinColumn(name = "gestion_ecole_id")
-    private GestionEcole gestionEcole;
 
-    @Column(name = "prenom")
-    private String prenom;
+    @Column(name = "adresse")
+    private String adresse;
 
-    @ManyToMany(mappedBy = "classes")
-    @ToString.Exclude
-    private List<Matiere> matieres;
+    @Column(name = "telephone")
+    private String telephone;
+
+    @Column(name = "email")
+    private String email;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Classe classe = (Classe) o;
-        return id != null && Objects.equals(id, classe.id);
+        Ecole ecole = (Ecole) o;
+        return id != null && Objects.equals(id, ecole.id);
     }
 
     @Override

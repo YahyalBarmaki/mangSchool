@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MangSchoolApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MangSchoolApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MangSchoolApplication.class, args);
+    }
 
 }

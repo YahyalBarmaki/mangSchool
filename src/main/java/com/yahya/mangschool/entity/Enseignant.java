@@ -7,29 +7,30 @@ import org.hibernate.Hibernate;
 import java.util.List;
 import java.util.Objects;
 
-
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "classe")
-public class Classe {
+@Table(name = "enseignant")
+public class Enseignant {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "nom")
     private String nom;
-    @ManyToOne
-    @JoinColumn(name = "gestion_ecole_id")
-    private GestionEcole gestionEcole;
 
     @Column(name = "prenom")
     private String prenom;
 
-    @ManyToMany(mappedBy = "classes")
+    @ManyToOne
+    @JoinColumn(name = "gestion_ecole_id")
+    private GestionEcole gestionEcole;
+
+
+    @ManyToMany(mappedBy = "enseignants")
     @ToString.Exclude
     private List<Matiere> matieres;
 
@@ -37,8 +38,8 @@ public class Classe {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Classe classe = (Classe) o;
-        return id != null && Objects.equals(id, classe.id);
+        Enseignant that = (Enseignant) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
     @Override

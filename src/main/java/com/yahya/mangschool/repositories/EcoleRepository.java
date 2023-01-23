@@ -1,4 +1,7 @@
 package com.yahya.mangschool.repositories;
 
-public interface EcoleRepository {
+import com.yahya.mangschool.entity.Ecole;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EcoleRepository  extends JpaRepository<Ecole,Long> {
 }

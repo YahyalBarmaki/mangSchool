@@ -1,37 +1,15 @@
 package com.yahya.mangschool.services;
 
-import com.yahya.mangschool.entity.Matiere;
-import com.yahya.mangschool.repositories.MatiereRepository;
-import org.springframework.stereotype.Service;
+import com.yahya.mangschool.dto.MatiereDTO;
 
 import java.util.List;
 
-@Service
-public class MatiereService {
 
-    final private MatiereRepository matiereRepository;
+public interface MatiereService {
 
-    public MatiereService(MatiereRepository matiereRepository) {
-        this.matiereRepository = matiereRepository;
-    }
-
-    public Matiere saveMatiere(Matiere matiere) {
-        return matiereRepository.save(matiere);
-    }
-
-    public Matiere updateMatiere(Matiere matiere) {
-        return matiereRepository.save(matiere);
-    }
-
-    public List<Matiere> getAllMatieres() {
-        return matiereRepository.findAll();
-    }
-
-    public Matiere getMatiereById(Long id) {
-        return matiereRepository.findById(id).orElse(null);
-    }
-
-    public void deleteMatiere(Long id) {
-        matiereRepository.deleteById(id);
-    }
+    List<MatiereDTO> findAll();
+    MatiereDTO findById(Long id);
+    MatiereDTO save(MatiereDTO matiereDTO);
+    MatiereDTO update(Long id, MatiereDTO matiereDTO);
+    void delete(Long id);
 }

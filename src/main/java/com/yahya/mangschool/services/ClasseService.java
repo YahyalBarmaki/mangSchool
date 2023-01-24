@@ -1,0 +1,13 @@
+package com.yahya.mangschool.services;
+
+import com.yahya.mangschool.dto.ClasseDTO;
+
+import java.util.List;
+
+public interface ClasseService {
+    List<ClasseDTO> findAll();
+    ClasseDTO findById(Long id);
+    ClasseDTO save(ClasseDTO classeDTO);
+    void delete(Long id);
+}
+

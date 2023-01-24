@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +21,10 @@ public class EmploiDuTemps {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
+    @NotEmpty
+    private LocalTime heureDebut;
+    @NotEmpty
+    private LocalTime heureFin;
     @ManyToOne
     @JoinColumn(name = "classe_id")
     private Classe classe;

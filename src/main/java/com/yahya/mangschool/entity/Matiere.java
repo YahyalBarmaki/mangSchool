@@ -25,7 +25,10 @@ public class Matiere {
     @Size(min = 2,max=20,message = "Le nom de l\"éléve doit compris entre 2 à 20 caratéteres")
     @Column(name = "nom")
     private String nom;
-
+    @NotEmpty
+    private int coef;
+    @NotEmpty(message = "Ce champ ne doit pas etre vide")
+    private String desc;
     @ManyToMany(mappedBy = "matieres")
     @ToString.Exclude
     private List<Enseignant> enseignants;

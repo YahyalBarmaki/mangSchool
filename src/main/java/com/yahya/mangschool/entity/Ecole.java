@@ -43,6 +43,9 @@ public class Ecole {
     @Column(name = "email")
     private String email;
 
+    @NotEmpty(message = "Ce champ ne doit pas etre vide")
+    private String siteWeb;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

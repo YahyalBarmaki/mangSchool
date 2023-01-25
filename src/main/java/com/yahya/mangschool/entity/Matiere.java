@@ -28,7 +28,7 @@ public class Matiere {
     @NotEmpty
     private int coef;
     @NotEmpty(message = "Ce champ ne doit pas etre vide")
-    private String desc;
+    private String descrip;
     @ManyToMany(mappedBy = "matieres")
     @ToString.Exclude
     private List<Enseignant> enseignants;

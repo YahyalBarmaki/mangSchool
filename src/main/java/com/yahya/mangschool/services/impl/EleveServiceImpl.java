@@ -1,8 +1,6 @@
 package com.yahya.mangschool.services.impl;
 
-import com.yahya.mangschool.dto.EcoleDTO;
 import com.yahya.mangschool.dto.EleveDTO;
-import com.yahya.mangschool.entity.Ecole;
 import com.yahya.mangschool.entity.Eleve;
 import com.yahya.mangschool.repositories.EleveRepository;
 import com.yahya.mangschool.services.EleveService;
@@ -10,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +31,17 @@ public class EleveServiceImpl implements EleveService {
     public EleveDTO findById(Long id) {
         Eleve eleve = eleveRepository.findById(id).orElse(null);
         return modelMapper.map(eleve, EleveDTO.class);
+    }
+
+    @Override
+    public EleveDTO update(Long id, EleveDTO eleveDTO) {
+        Optional<Eleve> eleve = eleveRepository.findById(id);
+        if(!eleve.isEmpty()){
+            return null;
+        }
+        modelMapper.map(eleveDTO,eleve.get());
+        eleveRepository.save(eleve.get());
+        return modelMapper.map(eleve.get(),EleveDTO.class);
     }
 
     @Override

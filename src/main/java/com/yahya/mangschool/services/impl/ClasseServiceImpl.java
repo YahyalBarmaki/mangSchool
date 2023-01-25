@@ -42,6 +42,17 @@ public class ClasseServiceImpl implements ClasseService {
     }
 
     @Override
+    public ClasseDTO update(Long id, ClasseDTO classeDTO) {
+        Optional<Classe> classe = classeRepository.findById(id);
+        if(!classe.isEmpty()){
+        return null;
+        }
+        modelMapper.map(classeDTO,classe.get());
+        classeRepository.save(classe.get());
+        return modelMapper.map(classe.get(), ClasseDTO.class);
+    }
+
+    @Override
     public void delete(Long id) {
         classeRepository.deleteById(id);
     }

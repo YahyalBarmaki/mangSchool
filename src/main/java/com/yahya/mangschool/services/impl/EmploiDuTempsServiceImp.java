@@ -36,6 +36,17 @@ public class EmploiDuTempsServiceImp implements EmploiDuTempsService {
     }
 
     @Override
+    public EmploiDuTempsDTO update(Long id, EmploiDuTempsDTO emploiDuTempsDTO) {
+        Optional<EmploiDuTemps> emploiDuTemps = emploiDuTempsRepository.findById(id);
+        if (!emploiDuTemps.isEmpty()){
+        return null;
+        }
+        modelMapper.map(emploiDuTempsDTO,emploiDuTemps.get());
+        emploiDuTempsRepository.save(emploiDuTemps.get());
+        return  modelMapper.map(emploiDuTemps.get(),EmploiDuTempsDTO.class);
+    }
+
+    @Override
     public EmploiDuTempsDTO save(EmploiDuTempsDTO emploiDuTempsDTO) {
         EmploiDuTemps emploiDuTemps = modelMapper.map(emploiDuTempsDTO, EmploiDuTemps.class);
         emploiDuTemps = emploiDuTempsRepository.save(emploiDuTemps);

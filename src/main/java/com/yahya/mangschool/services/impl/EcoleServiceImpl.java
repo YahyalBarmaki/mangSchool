@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +33,17 @@ public class EcoleServiceImpl implements EcoleService {
     public EcoleDTO findById(Long id) {
         Ecole ecole = ecoleRepository.findById(id).orElse(null);
         return modelMapper.map(ecole, EcoleDTO.class);
+    }
+
+    @Override
+    public EcoleDTO update(Long id, EcoleDTO ecoleDTO) {
+        Optional<Ecole> ecole = ecoleRepository.findById(id);
+        if (!ecole.isEmpty()){
+        return null;
+        }
+        modelMapper.map(ecoleDTO,ecole.get());
+        ecoleRepository.save(ecole.get());
+        return modelMapper.map(ecole.get(),EcoleDTO.class);
     }
 
     @Override

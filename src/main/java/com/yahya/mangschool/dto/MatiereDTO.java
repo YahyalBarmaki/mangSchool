@@ -10,10 +10,9 @@ import java.util.List;
 public class MatiereDTO {
     private Long id;
     private String nom;
-    private String coef;
-    private String desc;
+    private int coef;
+    private String descrip;
     private List<EnseignantDTO> enseignants;
     private List<ClasseDTO> classes;
-
 
 }

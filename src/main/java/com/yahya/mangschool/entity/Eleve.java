@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -38,6 +39,7 @@ public class Eleve {
     @NotEmpty(message = "Ce champ ne doit pas etre vide")
     @Size(min = 9,max=12,message = "Le numéro doit compris entre 9 à 12 caratéteres")
     @Column(name = "telephone")
+    @Pattern(regexp = "^\\d{12}$")
     private String telephone;
 
     @ManyToOne

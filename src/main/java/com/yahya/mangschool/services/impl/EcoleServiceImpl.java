@@ -1,9 +1,14 @@
 package com.yahya.mangschool.services.impl;
 
+import com.yahya.mangschool.dto.ClasseDTO;
 import com.yahya.mangschool.dto.EcoleDTO;
 import com.yahya.mangschool.entity.Ecole;
+import com.yahya.mangschool.exeption.EntityNotFoundException;
+import com.yahya.mangschool.exeption.ErrorCodes;
+import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.EcoleRepository;
 import com.yahya.mangschool.services.EcoleService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class EcoleServiceImpl implements EcoleService {
 
     final private EcoleRepository ecoleRepository;
@@ -25,14 +31,27 @@ public class EcoleServiceImpl implements EcoleService {
     @Override
     public EcoleDTO save(EcoleDTO ecoleDTO) {
         Ecole ecole = modelMapper.map(ecoleDTO, Ecole.class);
+        if (ecole == null){
+            log.error("Ecole is not valid {}", ecoleDTO);
+            throw new InvalidEntityException("L\"école n'est pas valide", ErrorCodes.ECOLE_NOT_VALID);
+        }
         ecole = ecoleRepository.save(ecole);
         return modelMapper.map(ecole,EcoleDTO.class);
     }
 
     @Override
     public EcoleDTO findById(Long id) {
-        Ecole ecole = ecoleRepository.findById(id).orElse(null);
-        return modelMapper.map(ecole, EcoleDTO.class);
+        Optional<Ecole> ecole = ecoleRepository.findById(id);
+        if (id == null) {
+            log.error("Ecole ID is null");
+            return null;
+        }
+        return ecole.map(c -> modelMapper.map(ecole, EcoleDTO.class)).orElseThrow(
+                ()->
+        new EntityNotFoundException(
+                "Aucune ecole avec l'ID = " + id + " n' ete trouve dans la BDD",
+                ErrorCodes.CLASSE_NOT_FOUND)
+        );
     }
 
     @Override

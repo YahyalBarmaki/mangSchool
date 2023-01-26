@@ -2,8 +2,12 @@ package com.yahya.mangschool.services.impl;
 
 import com.yahya.mangschool.dto.ClasseDTO;
 import com.yahya.mangschool.entity.Classe;
+import com.yahya.mangschool.exeption.EntityNotFoundException;
+import com.yahya.mangschool.exeption.ErrorCodes;
+import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.ClasseRepository;
 import com.yahya.mangschool.services.ClasseService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ClasseServiceImpl implements ClasseService {
     final private ClasseRepository classeRepository;
     final private ModelMapper modelMapper;
@@ -31,12 +36,25 @@ public class ClasseServiceImpl implements ClasseService {
     @Override
     public ClasseDTO findById(Long id) {
         Optional<Classe> classe = classeRepository.findById(id);
-        return classe.map(c -> modelMapper.map(c, ClasseDTO.class)).orElse(null);
+        if (id == null) {
+            log.error("Classe ID is null");
+            return null;
+        }
+        return classe.map(c -> modelMapper.map(c, ClasseDTO.class)).orElseThrow(
+                () ->
+                        new EntityNotFoundException(
+                                "Aucune avec l'ID = " + id + " n' ete trouve dans la BDD",
+                                ErrorCodes.CLASSE_NOT_FOUND)
+        );
     }
 
     @Override
     public ClasseDTO save(ClasseDTO classeDTO) {
         Classe classe = modelMapper.map(classeDTO, Classe.class);
+        if (classe == null) {
+            log.error("Classe is not valid {}", classeDTO);
+            throw new InvalidEntityException("La Classe n'est pas valide", ErrorCodes.CLASSE_NOT_VALID);
+        }
         classe = classeRepository.save(classe);
         return modelMapper.map(classe, ClasseDTO.class);
     }
@@ -44,16 +62,20 @@ public class ClasseServiceImpl implements ClasseService {
     @Override
     public ClasseDTO update(Long id, ClasseDTO classeDTO) {
         Optional<Classe> classe = classeRepository.findById(id);
-        if(!classe.isEmpty()){
-        return null;
+        if (!classe.isEmpty()) {
+            return null;
         }
-        modelMapper.map(classeDTO,classe.get());
+        modelMapper.map(classeDTO, classe.get());
         classeRepository.save(classe.get());
         return modelMapper.map(classe.get(), ClasseDTO.class);
     }
 
     @Override
     public void delete(Long id) {
+        if (id == null) {
+            log.error("Classe ID is null");
+            return ;
+        }
         classeRepository.deleteById(id);
     }
 }

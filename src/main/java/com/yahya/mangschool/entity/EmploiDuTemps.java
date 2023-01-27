@@ -1,10 +1,10 @@
 package com.yahya.mangschool.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;

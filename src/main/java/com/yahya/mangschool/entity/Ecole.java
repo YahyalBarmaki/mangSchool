@@ -1,13 +1,10 @@
 package com.yahya.mangschool.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 
@@ -23,7 +20,8 @@ public class Ecole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
+    @NotNull(message = "Ce champ ne doit pas etre null")
+    @NotBlank(message = "Ce champ est obligatoire")
     @NotEmpty(message = "Ce champ ne doit pas etre vide")
     @Size(min = 2,max=20,message = "Le nom de la classe doit compris entre 2 à 20 caratéteres")
     @Column(name = "nom")
@@ -34,10 +32,9 @@ public class Ecole {
     @Column(name = "adresse")
     private String adresse;
 
-    @NotEmpty(message = "Ce champ ne doit pas etre vide")
-    @Size(min = 9,max=12,message = "Le numéro doit compris entre 9 à 12 caratéteres")
+    //@NotEmpty(message = "Ce champ ne doit pas etre vide")
     @Column(name = "telephone")
-    @Pattern(regexp = "^\\d{12}$")
+    //@Pattern(regexp = "^\\d{12}$")
     private String telephone;
 
     @NotEmpty(message = "Ce champ ne doit pas etre vide")

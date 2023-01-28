@@ -9,6 +9,7 @@ import com.yahya.mangschool.exeption.ErrorCodes;
 import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.EleveRepository;
 import com.yahya.mangschool.services.EleveService;
+import com.yahya.mangschool.validators.EleveValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -64,11 +65,13 @@ public class EleveServiceImpl implements EleveService {
 
     @Override
     public EleveDTO save(EleveDTO eleveDTO) {
-        Eleve eleve = modelMapper.map(eleveDTO,Eleve.class);
-        if (eleve == null){
+        List<String> errors = EleveValidator.validate(eleveDTO);
+        if (errors.isEmpty()){
             log.error("Eleve is not valid {}", eleveDTO);
-            throw new InvalidEntityException("L\"éléve n'est pas valide", ErrorCodes.ELEVE_NOT_VALID);
+            throw new InvalidEntityException("L'éléve n'est pas valide", ErrorCodes.ELEVE_NOT_VALID,errors);
         }
+        Eleve eleve = modelMapper.map(eleveDTO,Eleve.class);
+
         eleve = eleveRepository.save(eleve);
         return modelMapper.map(eleve, EleveDTO.class);
     }

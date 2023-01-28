@@ -11,6 +11,7 @@ import com.yahya.mangschool.exeption.ErrorCodes;
 import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.EnseignantRepository;
 import com.yahya.mangschool.services.EnseignantService;
+import com.yahya.mangschool.validators.EnseignantValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -32,11 +33,13 @@ public class EnseignantServiceImpl implements EnseignantService {
 
     @Override
     public EnseignantDTO save(EnseignantDTO enseignantDTO) {
-        Enseignant enseignant = modelMapper.map(enseignantDTO,Enseignant.class);
-        if (enseignant == null){
+        List<String> errors = EnseignantValidator.validate(enseignantDTO);
+        if (errors.isEmpty()){
             log.error("Enseignant is not valid {}", enseignantDTO);
-            throw new InvalidEntityException("L\"enseignant n'est pas valide", ErrorCodes.Enseignant_NOT_VALID);
+            throw new InvalidEntityException("L\"enseignant n'est pas valide", ErrorCodes.Enseignant_NOT_VALID,errors);
         }
+        Enseignant enseignant = modelMapper.map(enseignantDTO,Enseignant.class);
+
         enseignantRepository.save(enseignant);
         return modelMapper.map(enseignantDTO,EnseignantDTO.class);
     }

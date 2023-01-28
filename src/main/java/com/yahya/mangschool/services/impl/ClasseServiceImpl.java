@@ -7,6 +7,7 @@ import com.yahya.mangschool.exeption.ErrorCodes;
 import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.ClasseRepository;
 import com.yahya.mangschool.services.ClasseService;
+import com.yahya.mangschool.validators.ClasseValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -50,11 +51,12 @@ public class ClasseServiceImpl implements ClasseService {
 
     @Override
     public ClasseDTO save(ClasseDTO classeDTO) {
-        Classe classe = modelMapper.map(classeDTO, Classe.class);
-        if (classe == null) {
+        List<String> errors = ClasseValidator.validate(classeDTO);
+        if (!errors.isEmpty()){
             log.error("Classe is not valid {}", classeDTO);
-            throw new InvalidEntityException("La Classe n'est pas valide", ErrorCodes.CLASSE_NOT_VALID);
+            throw new InvalidEntityException("La Classe n'est pas valide", ErrorCodes.CLASSE_NOT_VALID,errors);
         }
+        Classe classe = modelMapper.map(classeDTO, Classe.class);
         classe = classeRepository.save(classe);
         return modelMapper.map(classe, ClasseDTO.class);
     }

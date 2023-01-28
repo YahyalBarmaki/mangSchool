@@ -8,6 +8,7 @@ import com.yahya.mangschool.exeption.ErrorCodes;
 import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.MatiereRepository;
 import com.yahya.mangschool.services.MatiereService;
+import com.yahya.mangschool.validators.MatiereValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -53,11 +54,13 @@ public class MatiereServiceImp implements MatiereService {
 
     @Override
     public MatiereDTO save(MatiereDTO matiereDTO) {
-        Matiere matiere = modelMapper.map(matiereDTO, Matiere.class);
-        if (matiere == null){
+        List<String> errors = MatiereValidator.validate(matiereDTO);
+        if (errors.isEmpty()){
             log.error("Matiere is not valid {}", matiereDTO);
-            throw new InvalidEntityException("La matiere n'est pas valide", ErrorCodes.MATIERE_NOT_VALID);
+            throw new InvalidEntityException("La matiere n'est pas valide", ErrorCodes.MATIERE_NOT_VALID,errors);
         }
+        Matiere matiere = modelMapper.map(matiereDTO, Matiere.class);
+
         matiere = matiereRepository.save(matiere);
         return modelMapper.map(matiere, MatiereDTO.class);
     }

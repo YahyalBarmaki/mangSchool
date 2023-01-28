@@ -1,6 +1,5 @@
 package com.yahya.mangschool.services.impl;
 
-import com.yahya.mangschool.dto.EleveDTO;
 import com.yahya.mangschool.dto.EmploiDuTempsDTO;
 import com.yahya.mangschool.entity.EmploiDuTemps;
 import com.yahya.mangschool.exeption.EntityNotFoundException;
@@ -8,6 +7,7 @@ import com.yahya.mangschool.exeption.ErrorCodes;
 import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.EmploiDuTempsRepository;
 import com.yahya.mangschool.services.EmploiDuTempsService;
+import com.yahya.mangschool.validators.EmploiDuTempsValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -63,11 +63,13 @@ public class EmploiDuTempsServiceImp implements EmploiDuTempsService {
 
     @Override
     public EmploiDuTempsDTO save(EmploiDuTempsDTO emploiDuTempsDTO) {
-        EmploiDuTemps emploiDuTemps = modelMapper.map(emploiDuTempsDTO, EmploiDuTemps.class);
-        if (emploiDuTemps == null){
+        List<String> errors = EmploiDuTempsValidator.validate(emploiDuTempsDTO);
+        if (errors.isEmpty()){
             log.error("Eleve is not valid {}", emploiDuTempsDTO);
-            throw new InvalidEntityException("L\"emploiDuTempsDTO n'est pas valide", ErrorCodes.EmploiDuTemps_NOT_VALID);
+            throw new InvalidEntityException("L'emploiDuTempsDTO n'est pas valide", ErrorCodes.EmploiDuTemps_NOT_VALID,errors);
         }
+        EmploiDuTemps emploiDuTemps = modelMapper.map(emploiDuTempsDTO, EmploiDuTemps.class);
+
         emploiDuTemps = emploiDuTempsRepository.save(emploiDuTemps);
         return modelMapper.map(emploiDuTemps, EmploiDuTempsDTO.class);
     }

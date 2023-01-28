@@ -8,6 +8,7 @@ import com.yahya.mangschool.exeption.ErrorCodes;
 import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.EcoleRepository;
 import com.yahya.mangschool.services.EcoleService;
+import com.yahya.mangschool.validators.EcoleValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -30,11 +31,12 @@ public class EcoleServiceImpl implements EcoleService {
 
     @Override
     public EcoleDTO save(EcoleDTO ecoleDTO) {
-        Ecole ecole = modelMapper.map(ecoleDTO, Ecole.class);
-        if (ecole == null){
+        List<String> errors = EcoleValidator.validate(ecoleDTO);
+        if (errors.isEmpty()){
             log.error("Ecole is not valid {}", ecoleDTO);
-            throw new InvalidEntityException("L\"école n'est pas valide", ErrorCodes.ECOLE_NOT_VALID);
+            throw new InvalidEntityException("L'école n'est pas valide", ErrorCodes.ECOLE_NOT_VALID,errors);
         }
+        Ecole ecole = modelMapper.map(ecoleDTO, Ecole.class);
         ecole = ecoleRepository.save(ecole);
         return modelMapper.map(ecole,EcoleDTO.class);
     }

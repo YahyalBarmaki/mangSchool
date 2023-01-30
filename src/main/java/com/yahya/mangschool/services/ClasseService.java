@@ -1,7 +1,6 @@
 package com.yahya.mangschool.services;
 
 import com.yahya.mangschool.dto.ClasseDTO;
-import com.yahya.mangschool.dto.EcoleDTO;
 
 import java.util.List;
 

@@ -1,14 +1,11 @@
 package com.yahya.mangschool.services.impl;
 
-import com.yahya.mangschool.dto.EnseignantDTO;
 import com.yahya.mangschool.dto.MatiereDTO;
 import com.yahya.mangschool.entity.Matiere;
 import com.yahya.mangschool.exeption.EntityNotFoundException;
 import com.yahya.mangschool.exeption.ErrorCodes;
-import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.MatiereRepository;
 import com.yahya.mangschool.services.MatiereService;
-import com.yahya.mangschool.validators.MatiereValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -44,7 +41,7 @@ public class MatiereServiceImp implements MatiereService {
             log.error("Matiere ID is null");
             return null;
         }
-        return matiere.map(c -> modelMapper.map(matiere, MatiereDTO.class)).orElseThrow(
+        return matiere.map(mat -> modelMapper.map(mat, MatiereDTO.class)).orElseThrow(
                 ()->
                         new EntityNotFoundException(
                                 "Aucune matiere avec l'ID = " + id + " n' ete trouve dans la BDD",
@@ -54,26 +51,16 @@ public class MatiereServiceImp implements MatiereService {
 
     @Override
     public MatiereDTO save(MatiereDTO matiereDTO) {
-        List<String> errors = MatiereValidator.validate(matiereDTO);
-        if (errors.isEmpty()){
-            log.error("Matiere is not valid {}", matiereDTO);
-            throw new InvalidEntityException("La matiere n'est pas valide", ErrorCodes.MATIERE_NOT_VALID,errors);
-        }
         Matiere matiere = modelMapper.map(matiereDTO, Matiere.class);
-
         matiere = matiereRepository.save(matiere);
         return modelMapper.map(matiere, MatiereDTO.class);
     }
 
     @Override
     public MatiereDTO update(Long id, MatiereDTO matiereDTO) {
-        Optional<Matiere> matiere = matiereRepository.findById(id);
-        if (matiere.isEmpty()) {
-            return null;
-        }
-        modelMapper.map(matiereDTO, matiere.get());
-        matiereRepository.save(matiere.get());
-        return modelMapper.map(matiere.get(), MatiereDTO.class);
+        Matiere matiere = modelMapper.map(matiereDTO, Matiere.class);
+        matiereRepository.save(matiere);
+        return modelMapper.map(matiere, MatiereDTO.class);
     }
 
     @Override

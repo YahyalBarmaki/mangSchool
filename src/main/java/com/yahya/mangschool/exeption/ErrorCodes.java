@@ -13,7 +13,9 @@ public enum ErrorCodes {
     Enseignant_NOT_FOUND(6000),
     Enseignant_NOT_VALID(6001),
     MATIERE_NOT_FOUND(6000),
-    MATIERE_NOT_VALID(6001);
+    MATIERE_NOT_VALID(6001),
+    BAD_REQUEST(400),
+    NOT_FOUND(404);
 
     private int code;
 

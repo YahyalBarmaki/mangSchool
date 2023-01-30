@@ -2,20 +2,25 @@ package com.yahya.mangschool.controller.api;
 
 import com.yahya.mangschool.dto.EcoleDTO;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import static com.yahya.mangschool.utils.Constants.APP_ROOT;
+import static com.yahya.mangschool.utils.Constants.APP_ROOT_ECOLE;
+
+
+@RequestMapping(value = APP_ROOT_ECOLE )
 public interface EcoleApi {
 
-    @PostMapping(value = APP_ROOT + "/ecoles/add")
+    @PostMapping(value =  "")
     EcoleDTO save(@RequestBody @Valid EcoleDTO ecole);
-    @GetMapping(APP_ROOT + "/ecoles/{idEcole}")
-    EcoleDTO findById(@PathVariable("idEcole")Long id);
-    @PutMapping(APP_ROOT + "/ecoles/update/{idEcole}")
-    EcoleDTO update(@PathVariable("idEcole")Long id, @RequestBody @Valid EcoleDTO ecoleDTO);
-    @GetMapping(APP_ROOT + "/ecoles/all")
+    @GetMapping( "/{id}")
+    EcoleDTO findById(@PathVariable("id")Long id);
+    @PutMapping( "/{id}")
+    EcoleDTO update(@PathVariable("id")Long id, @RequestBody @Valid EcoleDTO ecoleDTO);
+    @GetMapping( "")
     List<EcoleDTO> findAll();
-    @DeleteMapping(APP_ROOT + "/ecoles/delete/{idEcole}")
-    void deleteById(@PathVariable("idEcole")Long id);
+    @DeleteMapping( "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteById(@PathVariable("id")Long id);
 }

@@ -1,14 +1,11 @@
 package com.yahya.mangschool.services.impl;
 
-import com.yahya.mangschool.dto.ClasseDTO;
 import com.yahya.mangschool.dto.EcoleDTO;
 import com.yahya.mangschool.entity.Ecole;
 import com.yahya.mangschool.exeption.EntityNotFoundException;
 import com.yahya.mangschool.exeption.ErrorCodes;
-import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.EcoleRepository;
 import com.yahya.mangschool.services.EcoleService;
-import com.yahya.mangschool.validators.EcoleValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -31,11 +28,6 @@ public class EcoleServiceImpl implements EcoleService {
 
     @Override
     public EcoleDTO save(EcoleDTO ecoleDTO) {
-        List<String> errors = EcoleValidator.validate(ecoleDTO);
-        if (errors.isEmpty()){
-            log.error("Ecole is not valid {}", ecoleDTO);
-            throw new InvalidEntityException("L'école n'est pas valide", ErrorCodes.ECOLE_NOT_VALID,errors);
-        }
         Ecole ecole = modelMapper.map(ecoleDTO, Ecole.class);
         ecole = ecoleRepository.save(ecole);
         return modelMapper.map(ecole,EcoleDTO.class);
@@ -48,7 +40,7 @@ public class EcoleServiceImpl implements EcoleService {
             log.error("Ecole ID is null");
             return null;
         }
-        return ecole.map(c -> modelMapper.map(ecole, EcoleDTO.class)).orElseThrow(
+        return ecole.map(ec -> modelMapper.map(ec, EcoleDTO.class)).orElseThrow(
                 ()->
         new EntityNotFoundException(
                 "Aucune ecole avec l'ID = " + id + " n' ete trouve dans la BDD",
@@ -58,13 +50,9 @@ public class EcoleServiceImpl implements EcoleService {
 
     @Override
     public EcoleDTO update(Long id, EcoleDTO ecoleDTO) {
-        Optional<Ecole> ecole = ecoleRepository.findById(id);
-        if (!ecole.isEmpty()){
-        return null;
-        }
-        modelMapper.map(ecoleDTO,ecole.get());
-        ecoleRepository.save(ecole.get());
-        return modelMapper.map(ecole.get(),EcoleDTO.class);
+        Ecole  ecole= modelMapper.map(ecoleDTO, Ecole.class);
+        ecoleRepository.save(ecole);
+        return modelMapper.map(ecole,EcoleDTO.class);
     }
 
     @Override

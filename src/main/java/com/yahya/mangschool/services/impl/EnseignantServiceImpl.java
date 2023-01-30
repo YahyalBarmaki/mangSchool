@@ -1,17 +1,11 @@
 package com.yahya.mangschool.services.impl;
 
-import com.yahya.mangschool.dto.EleveDTO;
-import com.yahya.mangschool.dto.EmploiDuTempsDTO;
 import com.yahya.mangschool.dto.EnseignantDTO;
-import com.yahya.mangschool.dto.MatiereDTO;
-import com.yahya.mangschool.entity.Eleve;
 import com.yahya.mangschool.entity.Enseignant;
 import com.yahya.mangschool.exeption.EntityNotFoundException;
 import com.yahya.mangschool.exeption.ErrorCodes;
-import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.EnseignantRepository;
 import com.yahya.mangschool.services.EnseignantService;
-import com.yahya.mangschool.validators.EnseignantValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -33,15 +27,9 @@ public class EnseignantServiceImpl implements EnseignantService {
 
     @Override
     public EnseignantDTO save(EnseignantDTO enseignantDTO) {
-        List<String> errors = EnseignantValidator.validate(enseignantDTO);
-        if (errors.isEmpty()){
-            log.error("Enseignant is not valid {}", enseignantDTO);
-            throw new InvalidEntityException("L\"enseignant n'est pas valide", ErrorCodes.Enseignant_NOT_VALID,errors);
-        }
         Enseignant enseignant = modelMapper.map(enseignantDTO,Enseignant.class);
-
-        enseignantRepository.save(enseignant);
-        return modelMapper.map(enseignantDTO,EnseignantDTO.class);
+        enseignant = enseignantRepository.save(enseignant);
+        return modelMapper.map(enseignant,EnseignantDTO.class);
     }
 
     @Override
@@ -51,7 +39,7 @@ public class EnseignantServiceImpl implements EnseignantService {
             log.error("Enseignant ID is null");
             return null;
         }
-        return enseignant.map(c -> modelMapper.map(enseignant, EnseignantDTO.class)).orElseThrow(
+        return enseignant.map(ens -> modelMapper.map(ens, EnseignantDTO.class)).orElseThrow(
                 ()->
                         new EntityNotFoundException(
                                 "Aucun enseignant avec l'ID = " + id + " n' ete trouve dans la BDD",
@@ -61,13 +49,9 @@ public class EnseignantServiceImpl implements EnseignantService {
 
     @Override
     public EnseignantDTO update(Long id, EnseignantDTO enseignantDTO) {
-        Optional<Enseignant> enseignant = enseignantRepository.findById(id);
-        if (enseignant.isEmpty()) {
-            return null;
-        }
-        modelMapper.map(enseignantDTO, enseignant.get());
-        enseignantRepository.save(enseignant.get());
-        return modelMapper.map(enseignant.get(), EnseignantDTO.class);
+        Enseignant enseignant = modelMapper.map(enseignantDTO, Enseignant.class);
+        enseignantRepository.save(enseignant);
+        return modelMapper.map(enseignant, EnseignantDTO.class);
     }
 
     @Override

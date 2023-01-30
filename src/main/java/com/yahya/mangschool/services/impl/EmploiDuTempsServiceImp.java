@@ -4,10 +4,8 @@ import com.yahya.mangschool.dto.EmploiDuTempsDTO;
 import com.yahya.mangschool.entity.EmploiDuTemps;
 import com.yahya.mangschool.exeption.EntityNotFoundException;
 import com.yahya.mangschool.exeption.ErrorCodes;
-import com.yahya.mangschool.exeption.InvalidEntityException;
 import com.yahya.mangschool.repositories.EmploiDuTempsRepository;
 import com.yahya.mangschool.services.EmploiDuTempsService;
-import com.yahya.mangschool.validators.EmploiDuTempsValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -42,7 +40,7 @@ public class EmploiDuTempsServiceImp implements EmploiDuTempsService {
             log.error("EmploiDuTemps ID is null");
             return null;
         }
-        return emploiDuTemps.map(c -> modelMapper.map(emploiDuTemps, EmploiDuTempsDTO.class)).orElseThrow(
+        return emploiDuTemps.map(emp -> modelMapper.map(emp, EmploiDuTempsDTO.class)).orElseThrow(
                 ()->
                         new EntityNotFoundException(
                                 "Aucun emploiDuTemps avec l'ID = " + id + " n' ete trouve dans la BDD",
@@ -52,24 +50,15 @@ public class EmploiDuTempsServiceImp implements EmploiDuTempsService {
 
     @Override
     public EmploiDuTempsDTO update(Long id, EmploiDuTempsDTO emploiDuTempsDTO) {
-        Optional<EmploiDuTemps> emploiDuTemps = emploiDuTempsRepository.findById(id);
-        if (!emploiDuTemps.isEmpty()){
-        return null;
-        }
-        modelMapper.map(emploiDuTempsDTO,emploiDuTemps.get());
-        emploiDuTempsRepository.save(emploiDuTemps.get());
-        return  modelMapper.map(emploiDuTemps.get(),EmploiDuTempsDTO.class);
+
+        EmploiDuTemps  emploiDuTemps= modelMapper.map(emploiDuTempsDTO,EmploiDuTemps.class);
+        emploiDuTempsRepository.save(emploiDuTemps);
+        return  modelMapper.map(emploiDuTemps,EmploiDuTempsDTO.class);
     }
 
     @Override
     public EmploiDuTempsDTO save(EmploiDuTempsDTO emploiDuTempsDTO) {
-        List<String> errors = EmploiDuTempsValidator.validate(emploiDuTempsDTO);
-        if (errors.isEmpty()){
-            log.error("Eleve is not valid {}", emploiDuTempsDTO);
-            throw new InvalidEntityException("L'emploiDuTempsDTO n'est pas valide", ErrorCodes.EmploiDuTemps_NOT_VALID,errors);
-        }
         EmploiDuTemps emploiDuTemps = modelMapper.map(emploiDuTempsDTO, EmploiDuTemps.class);
-
         emploiDuTemps = emploiDuTempsRepository.save(emploiDuTemps);
         return modelMapper.map(emploiDuTemps, EmploiDuTempsDTO.class);
     }

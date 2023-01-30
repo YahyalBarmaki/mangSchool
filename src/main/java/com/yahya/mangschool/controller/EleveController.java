@@ -27,8 +27,8 @@ public class EleveController implements EleveApi {
 
     @Override
     public EleveDTO update(Long id, EleveDTO eleveDTO) {
-       eleveService.update(id,eleveDTO);
-        return null;
+
+        return  eleveService.update(id,eleveDTO);
     }
 
     @Override

@@ -1,20 +1,24 @@
 package com.yahya.mangschool.controller.api;
 
 import com.yahya.mangschool.dto.EleveDTO;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import static com.yahya.mangschool.utils.Constants.APP_ROOT;
+import static com.yahya.mangschool.utils.Constants.APP_ROOT_ELEVE;
+@RequestMapping(value = APP_ROOT_ELEVE)
 public interface EleveApi {
 
-    @GetMapping(APP_ROOT + "/eleves/all")
+    @GetMapping("")
     List<EleveDTO> findAll();
-    @GetMapping(APP_ROOT + "/eleves/{idEleve}")
-    EleveDTO findById(@PathVariable("idEleve") Long id);
-    @PutMapping(APP_ROOT + "/eleves/update/{idEleve}")
-    EleveDTO update(@PathVariable("idEleve")Long id, @RequestBody EleveDTO eleveDTO);
-    @PostMapping(value = APP_ROOT + "/eleves/add")
-    EleveDTO save(@RequestBody EleveDTO eleveDTO);
-    @DeleteMapping(APP_ROOT + "/eleves/delete/{idEleve}")
-    void delete(@PathVariable("idEleve") Long id);
+    @GetMapping("/{id}")
+    EleveDTO findById(@PathVariable("id") Long id);
+    @PutMapping( "/{id}")
+    EleveDTO update(@PathVariable("id")Long id, @RequestBody @Valid EleveDTO eleveDTO);
+    @PostMapping("")
+    EleveDTO save(@RequestBody @Valid EleveDTO eleveDTO);
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void delete(@PathVariable("id") Long id);
 }

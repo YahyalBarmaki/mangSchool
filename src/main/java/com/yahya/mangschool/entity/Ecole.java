@@ -20,14 +20,12 @@ public class Ecole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @NotNull(message = "Ce champ ne doit pas etre null")
-    @NotBlank(message = "Ce champ est obligatoire")
-    @NotEmpty(message = "Ce champ ne doit pas etre vide")
-    @Size(min = 2,max=20,message = "Le nom de la classe doit compris entre 2 à 20 caratéteres")
+    @NotBlank(message = "Ce champ est obligatoire nn")
+    @Size(min = 2,max=200,message = "Le nom de la classe doit compris entre 2 à 20 caratéteres")
     @Column(name = "nom")
     private String nom;
 
-    @NotEmpty(message = "Ce champ ne doit pas etre vide")
+    @NotBlank(message = "Ce champ ne doit pas etre vide")
     @Size(min = 5,max=20,message = "L\"adresse de l\"éléve doit compris entre 3 à 20 caratéteres")
     @Column(name = "adresse")
     private String adresse;

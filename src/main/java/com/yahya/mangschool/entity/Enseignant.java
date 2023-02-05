@@ -1,6 +1,7 @@
 package com.yahya.mangschool.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -23,25 +24,24 @@ public class Enseignant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Ce champ ne doit pas etre vide")
+    @NotBlank(message = "Ce champ ne doit pas etre vide")
     @Size(min = 2,max=20,message = "Le nom de l\"éléve doit compris entre 2 à 20 caratéteres")
     @Column(name = "nom")
     private String nom;
 
-    @NotEmpty(message = "Ce champ ne doit pas etre vide")
+    @NotBlank(message = "Ce champ ne doit pas etre vide")
     @Size(min = 3,max=20,message = "Le prénom de l\"éléve doit compris entre 3 à 20 caratéteres")
     @Column(name = "prenom")
     private String prenom;
 
-    @NotEmpty(message = "Ce champ ne doit pas etre vide")
+    @NotBlank(message = "Ce champ ne doit pas etre vide")
     @Size(min = 5,max=20,message = "L\"adresse de l\"éléve doit compris entre 3 à 20 caratéteres")
     @Column(name = "adresse")
     private String adresse;
 
-    @NotEmpty(message = "Ce champ ne doit pas etre vide")
-    @Size(min = 9,max=12,message = "Le numéro doit compris entre 9 à 12 caratéteres")
+    @NotBlank(message = "Ce champ ne doit pas etre vide")
     @Column(name = "telephone")
-    @Pattern(regexp = "^\\d{12}$",message="Numéro de téléphone invalide,veillez entrer des entiers")
+    @Pattern(regexp = "^(221)(77|76|70|75|78)([0-9]{7})$",message = "Le numéro doit etre au format 221 77|76|70|75|78 XXX XX XX")
     private String telephone;
 
     @ManyToOne
@@ -50,7 +50,6 @@ public class Enseignant {
 
 
     @ManyToMany()
-    @ToString.Exclude
     private List<Matiere> matieres;
 
     @Override

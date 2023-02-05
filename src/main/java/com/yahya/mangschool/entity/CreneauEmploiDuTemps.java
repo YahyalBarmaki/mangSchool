@@ -17,9 +17,9 @@ public class CreneauEmploiDuTemps {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @ManyToOne
+   /* @ManyToOne
     @JoinColumn(name = "emploi_du_temps_id")
-    private EmploiDuTemps emploiDuTemps;
+    private EmploiDuTemps emploiDuTemps;*/
 
     @Override
     public boolean equals(Object o) {

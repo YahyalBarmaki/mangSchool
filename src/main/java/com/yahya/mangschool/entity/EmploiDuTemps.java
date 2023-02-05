@@ -1,11 +1,12 @@
 package com.yahya.mangschool.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import java.time.LocalTime;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,10 +22,10 @@ public class EmploiDuTemps {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @NotEmpty
-    private LocalTime heureDebut;
-    @NotEmpty
-    private LocalTime heureFin;
+
+    private Instant heureDebut;
+
+    private Instant heureFin;
     @ManyToOne
     @JoinColumn(name = "classe_id")
     private Classe classe;
@@ -46,8 +47,8 @@ public class EmploiDuTemps {
     @Column(name = "jour")
     private String jour;
 
-    @OneToMany(mappedBy = "emploiDuTemps", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CreneauEmploiDuTemps> creneaux;
+    /*@OneToMany(mappedBy = "emploiDuTemps", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CreneauEmploiDuTemps> creneaux = new ArrayList<>();*/
 
     @Override
     public boolean equals(Object o) {

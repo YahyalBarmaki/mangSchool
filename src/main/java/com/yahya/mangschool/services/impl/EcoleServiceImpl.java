@@ -44,7 +44,7 @@ public class EcoleServiceImpl implements EcoleService {
                 ()->
         new EntityNotFoundException(
                 "Aucune ecole avec l'ID = " + id + " n' ete trouve dans la BDD",
-                ErrorCodes.CLASSE_NOT_FOUND)
+                ErrorCodes.ECOLE_NOT_FOUND)
         );
     }
 

@@ -51,7 +51,7 @@ public class EmploiDuTempsServiceImp implements EmploiDuTempsService {
     @Override
     public EmploiDuTempsDTO update(Long id, EmploiDuTempsDTO emploiDuTempsDTO) {
 
-        EmploiDuTemps  emploiDuTemps= modelMapper.map(emploiDuTempsDTO,EmploiDuTemps.class);
+        EmploiDuTemps emploiDuTemps= modelMapper.map(emploiDuTempsDTO,EmploiDuTemps.class);
         emploiDuTempsRepository.save(emploiDuTemps);
         return  modelMapper.map(emploiDuTemps,EmploiDuTempsDTO.class);
     }

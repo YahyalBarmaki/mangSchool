@@ -12,7 +12,7 @@ public class MatiereDTO {
     private String nom;
     private int coef;
     private String descrip;
-    private List<EnseignantDTO> enseignants;
-    private List<ClasseDTO> classes;
+    private EnseignantDTO enseignants;
+    private ClasseDTO classes;
 
 }

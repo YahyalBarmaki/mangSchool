@@ -39,7 +39,7 @@ public class ClasseServiceImpl implements ClasseService {
             log.error("Classe ID is null");
             return null;
         }
-        return classe.map(c -> modelMapper.map(c, ClasseDTO.class)).orElseThrow(
+        return classe.map(cl -> modelMapper.map(cl, ClasseDTO.class)).orElseThrow(
                 () ->
                         new EntityNotFoundException(
                                 "Aucune avec l'ID = " + id + " n' ete trouve dans la BDD",

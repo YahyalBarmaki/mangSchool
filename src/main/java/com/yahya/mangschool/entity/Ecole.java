@@ -26,16 +26,18 @@ public class Ecole {
     private String nom;
 
     @NotBlank(message = "Ce champ ne doit pas etre vide")
-    @Size(min = 5,max=20,message = "L\"adresse de l\"éléve doit compris entre 3 à 20 caratéteres")
+    @Size(min = 5,max=20,message = "L\"adresse de l\"école doit compris entre 3 à 20 caratéteres")
     @Column(name = "adresse")
     private String adresse;
 
-    //@NotEmpty(message = "Ce champ ne doit pas etre vide")
+    @NotBlank(message = "Ce champ ne doit pas etre vide")
     @Column(name = "telephone")
-    //@Pattern(regexp = "^\\d{12}$")
+    @Size(min = 5,max=20,message = "L\"adresse de l\"éléve doit compris entre 3 à 20 caratéteres")
+    @Pattern(regexp = "^(221)(77|76|70|75|78)([0-9]{7})$",message = "Le numéro doit etre au format 221 77|76|70|75|78 XXX XX XX")
     private String telephone;
 
     @NotEmpty(message = "Ce champ ne doit pas etre vide")
+
     @Email(message = "Ce champ doit avoir un format XXX@YYY.xyz ")
     @Column(name = "email")
     private String email;

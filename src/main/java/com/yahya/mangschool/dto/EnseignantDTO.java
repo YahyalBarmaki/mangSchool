@@ -14,6 +14,6 @@ public class EnseignantDTO {
     private String prenom;
     private String adresse;
     private String telephone;
-    private List<MatiereDTO> matieres;
-    private List<EmploiDuTempsDTO> emploiDuTemps;
+    private MatiereDTO matieres;
+    private EmploiDuTempsDTO emploiDuTemps;
 }

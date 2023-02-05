@@ -1,7 +1,7 @@
 package com.yahya.mangschool.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -22,13 +22,13 @@ public class Matiere {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Ce champ ne doit pas etre vide")
+    @NotBlank(message = "Ce champ ne doit pas etre vide")
     @Size(min = 2,max=20,message = "Le nom de l\"éléve doit compris entre 2 à 20 caratéteres")
     @Column(name = "nom")
     private String nom;
-    @NotEmpty
+    //@NotBlank(message = "Ce champ ne doit pas etre vide")
     private int coef;
-    @NotEmpty(message = "Ce champ ne doit pas etre vide")
+    @NotBlank(message = "Ce champ ne doit pas etre vide")
     private String descrip;
     @ManyToMany(mappedBy = "matieres")
     @ToString.Exclude

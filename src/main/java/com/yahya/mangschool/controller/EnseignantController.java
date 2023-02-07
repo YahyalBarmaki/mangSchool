@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class Enseignant implements EnseignantApi {
+public class EnseignantController implements EnseignantApi {
     private EnseignantService enseignantService;
 
-    public Enseignant(EnseignantService enseignantService) {
+    public EnseignantController(EnseignantService enseignantService) {
         this.enseignantService = enseignantService;
     }
 

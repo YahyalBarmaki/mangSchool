@@ -14,11 +14,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class EnseignantServiceImplTest {
+public class EnseignantControllerServiceImplTest {
      @Autowired
     private EnseignantService enseignantService;
 
-    public EnseignantServiceImplTest(){}
+    public EnseignantControllerServiceImplTest(){}
 
     @Test
     public void testCreateEnseignant(){
